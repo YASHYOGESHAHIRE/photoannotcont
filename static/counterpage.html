@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Annotation Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    .nav-shadow {
+        backdrop-filter: blur(10px);
+        background-color: rgba(15, 23, 42, 0.8);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+</style>
+<body class="bg-[#0F172A] text-white">
+    <nav class="fixed top-0 left-0 w-full nav-shadow z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/"><span class="text-2xl font-bold gradient-text glow">PhotoAnnot</span></a>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <a href="/" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Home</a>
+                    <a href="/preview" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Demo</a>
+                    <a href="/github" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Github</a>
+
+                    
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container mx-auto px-4 py-16 max-w-5xl">
+        <header class="text-center mb-16">
+            <div class="inline-block bg-indigo-600/20 px-4 py-2 rounded-full mb-4">
+                <span class="text-indigo-400">Counter Detection</span>
+            </div>
+            <h1 class="text-3xl font-bold mb-4">Current Results</h1>
+            <p class="text-gray-400 text-sm max-w-2xl mx-auto">
+                These are the initial results of our AI image annotation project. We are continuously improving the system, and the output will soon become clearer and more accurate.
+            </p>
+        </header>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="rounded overflow-hidden shadow-lg bg-gray-800">
+                <img src="static/download (2).jpg" alt="Profile Picture">
+            </div>
+            <div class="rounded overflow-hidden shadow-lg bg-gray-800">
+                <img src="static/download (4).jpg" alt="Result 2" class="w-full h-auto">
+            </div>
+            <div class="rounded overflow-hidden shadow-lg bg-gray-800">
+                <img src="static/images (2) (1) - Copy.jpg" alt="Result 3" class="w-full h-auto">
+            </div>
+            <div class="rounded overflow-hidden shadow-lg bg-gray-800">
+                <img src="static/images (3) - Copy.jpg" alt="Result 4" class="w-full h-auto">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

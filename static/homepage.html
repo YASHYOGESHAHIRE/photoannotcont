@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoAnnot- Intelligent Image Annotation Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <style>
+        body {
+            background-color: #0F172A;
+            color: #E2E8F0;
+        }
+        
+        .feature-icon {
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        .nav-shadow {
+            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234F46E5' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease-in-out;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            border-color: #6366F1;
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #818CF8 0%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .button-gradient {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            transition: all 0.3s ease;
+        }
+
+        .button-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+            filter: brightness(110%);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        .glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow
+ {
+            0%, 100% { filter: brightness(100%) blur(0px); }
+            50% { filter: brightness(120%) blur(3px); }
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #6366F1;
+        }
+
+        .tech-stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            opacity: 0.7;
+        }
+
+        .tech-logo {
+            filter: grayscale(100%) brightness(200%);
+            transition: all 0.3s ease;
+        }
+
+        .tech-logo:hover {
+            filter: grayscale(0%) brightness(100%);
+            transform: scale(1.1);
+        }
+
+
+
+        
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full nav-shadow z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+
+                    <a href="/"><span class="text-2xl font-bold gradient-text glow">PhotoAnnot</span></a>
+                </div>
+                <div class=" items-center space-x-8">
+                    <a href="#features" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Features</a>
+                    <a href="/preview" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Demo</a>
+                    <a href="/github" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Github</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-gradient pt-32 pb-24">
+        <div class="max-w-7xl mx-auto px-4 text-center relative">
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full opacity-30">
+                <div class="floating">
+                    <svg width="404" height="384" fill="none" viewBox="0 0 404 384">
+                        <defs>
+                            <pattern id="grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <rect x="9" y="9" width="2" height="2" fill="#818CF8" fill-opacity="0.2"/>
+                            </pattern>
+                        </defs>
+                        <rect width="404" height="384" fill="url(#grid)"/>
+                    </svg>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                Intelligent Image Annotation
+                <span class="block text-xl font-normal mt-2">Powered by AI</span> <!-- Use span or p for secondary text -->
+            </h1>
+            
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+                Accelerate innovation with PhotoAnnot annotation technology
+                <span id="typed-text" class="gradient-text font-medium"></span>
+            </p>
+            <!-- Buttons Section -->
+           <!-- Updated Hero Section Buttons -->
+       
+        </div>
+    </div>
+    <div class="flex justify-center gap-4">
+        <a href="/preview" class="px-6 py-3 bg-indigo-600 text-white rounded-lg text-lg font-semibold hover:bg-indigo-500 transition" style="background-color: #805FF5;">
+            Get Started
+        </a>
+        <a href="#features" class="px-6 py-3 bg-gray-800 text-gray-300 rounded-lg text-lg font-semibold hover:bg-gray-700 transition">
+            Learn More
+        </a>
+    </div>
+<!-- Stats Section (Customized for your project) -->
+<section class="py-16 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Accuracy Rate -->
+            <div class="stat-card rounded-xl p-6 text-center">
+                <h3 class="text-3xl font-bold gradient-text mb-2">85%</h3>
+                <p class="text-gray-400">Current Object Detection Accuracy</p>
+            </div>
+            <!-- Speed -->
+            <div class="stat-card rounded-xl p-6 text-center">
+                <h3 class="text-3xl font-bold gradient-text mb-2">60%</h3>
+                <p class="text-gray-400">Counter-detection accuracy</p>
+            </div>
+            <!-- Images Processed -->
+            <div class="stat-card rounded-xl p-6 text-center">
+                <h3 class="text-3xl font-bold gradient-text mb-2">20sec</h3>
+                <p class="text-gray-400">Current Speed</p>
+            </div>
+            <!-- Contributors -->
+            <div class="stat-card rounded-xl p-6 text-center">
+                <h3 class="text-3xl font-bold gradient-text mb-2">90%</h3>
+                <p class="text-gray-400">Positive Feedback from Early Users</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-16">
+                Powerful Features for
+                <span class="gradient-text">Precise Annotation</span>
+            </h2>
+    
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="/preview" class="block">
+                    <div class="feature-card rounded-xl p-8">
+                        <div class="h-12 w-12 bg-indigo-900/50 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="feature-icon text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">AI Annotation</h3>
+                        <p class="text-gray-400 leading-relaxed">Automated annotation with bounding box to target object</p>
+                    </div>
+                </a>
+                
+    
+                <!-- Contour Detection -->
+                <div class="feature-card rounded-xl p-8">
+                    <a href="/counterpreview" class="block">
+                    <div class="h-12 w-12 bg-indigo-900/50 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="feature-icon text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Contour Detection</h3>
+                    <p class="text-gray-400 leading-relaxed">Advanced algorithms for precise object contour detection and segmentation.</p>
+                </a>
+                </div>
+    
+                <!-- Manual Annotation (Coming Soon) -->
+                <div class="feature-card rounded-xl p-8 opacity-60">
+                    <div class="h-12 w-12 bg-gray-700 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="feature-icon text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-300 mb-3">Manual Annotation</h3>
+                    <p class="text-gray-500 leading-relaxed">Intuitive tools for precise manual image labeling and adjustment.</p>
+                    <span class="inline-block bg-gray-800 text-gray-400 text-xs font-semibold px-2 py-1 rounded">Coming Soon</span>
+                </div>
+    
+                <!-- Preview & Models (Coming Soon) -->
+                <div class="feature-card rounded-xl p-8 opacity-60">
+                    <div class="h-12 w-12 bg-gray-700 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="feature-icon text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-300 mb-3">Preview & Models</h3>
+                    <p class="text-gray-500 leading-relaxed">Real-time preview and seamless integration with popular ML models.</p>
+                    <span class="inline-block bg-gray-800 text-gray-400 text-xs font-semibold px-2 py-1 rounded">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <p class="text-indigo-200 text-lg" style="text-align: center; width: 100%; margin: 0 auto;">
+        How the current results look like
+    </p>
+    <img src="static\one.jpg" alt="Girl in a jacket" width="500" height="600" style="display: block; margin: 0 auto;">
+    
+   
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-indigo-900 via-purple-900 to-indigo-900 py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="text-center md:text-left mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold text-white mb-3">
+                        Simplify and accelerate data labeling with our cutting-edge tools
+                    </h2>
+                    <p class="text-indigo-200 text-lg">
+                        Start annotating with real-time automation and reduce manual work by 60%                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="preview">
+                    <button class="px-8 py-4 button-gradient text-white rounded-full font-medium hover:shadow-xl transition-shadow">
+                    Free Trial
+                    </button>
+                </a>
+                <a href="developer">
+                    <button class="px-8 py-4 border-2 border-indigo-400 text-indigo-400 rounded-full font-medium hover:bg-indigo-400 hover:text-gray-900 transition-colors">
+                        Contact 
+                    </button>
+                </a>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <!-- Footer (New) -->
+    <footer class="bg-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <span class="text-2xl font-bold gradient-text glow">PhotoAnnot</span>
+                    <p class="text-gray-400 mt-4">Accelerate innovation with PhotoAnnot annotation technology.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-indigo-400 transition-colors">Features</a></li>
+                        <li><a href="/github" class="text-gray-400 hover:text-indigo-400 transition-colors">Github</a></li>
+                        <li><a href="/preview" class="text-gray-400 hover:text-indigo-400 transition-colors">Demo</a></li>                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/documentation" class="text-gray-400 hover:text-indigo-400 transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        
+                        <li><a href="/developer" class="text-gray-400 hover:text-indigo-400 transition-colors">Developer</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 PhotoAnnot. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+
+let annotations = [];
+        let isDrawing = false;
+        
+        function autoAnnotate() {
+            const mockAnnotations = [
+                { x: 100, y: 150, width: 200, height: 100, label: 'Person' },
+                { x: 300, y: 200, width: 150, height: 80, label: 'Car' }
+            ];
+            
+            annotations = mockAnnotations;
+            renderAnnotations();
+            document.getElementById('object-count').textContent = annotations.length;
+        }
+        
+        function renderAnnotations() {
+            const layer = document.getElementById('annotation-layer');
+            layer.innerHTML = '';
+            
+            annotations.forEach(ann => {
+                const box = document.createElement('div');
+                box.style.position = 'absolute';
+                box.style.left = `${ann.x}px`;
+                box.style.top = `${ann.y}px`;
+                box.style.width = `${ann.width}px`;
+                box.style.height = `${ann.height}px`;
+                box.style.border = '2px solid green';
+                box.style.pointerEvents = 'none';
+                
+                const label = document.createElement('div');
+                label.textContent = ann.label;
+                label.style.position = 'absolute';
+                label.style.top = '-20px';
+                label.style.background = 'green';
+                label.style.color = 'white';
+                label.style.padding = '2px 4px';
+                
+                box.appendChild(label);
+                layer.appendChild(box);
+            });
+        }
+        
+        function startDrawing() {
+            isDrawing = !isDrawing;
+            alert(isDrawing ? 'Drawing mode activated' : 'Drawing mode deactivated');
+        }
+         </script>
+</body>
+</html>
+
+

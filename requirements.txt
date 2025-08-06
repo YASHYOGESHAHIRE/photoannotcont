@@ -1,0 +1,9 @@
+fastapi
+python-multipart
+aiofiles
+opencv-python
+numpy
+google-generativeai
+tqdm
+python-dateutil
+uvicorn

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoAnnot</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1a1a2e, #16213e);
+            color: #eaeaea;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-shadow {
+            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .card {
+            background: #222831;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .button-primary {
+            background-color: #00adb5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 173, 181, 0.5);
+        }
+        .button-primary:hover {
+            background-color: #00969e;
+        }
+        input, select {
+            background: #393e46;
+            color: #eaeaea;
+            border: none;
+            padding: 8px;
+        }
+        input:focus, select:focus {
+            outline: 2px solid #00adb5;
+        }
+        label {
+            color: #eeeeee;
+        }
+        #progress {
+            background: #1f2937;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #progressBar {
+            background: #00adb5;
+        }
+    </style>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 w-full nav-shadow z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/"><span class="text-2xl font-bold gradient-text glow">PhotoAnnot</span></a>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <a href="/" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Home</a>
+                    <a href="/documentation" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Doc</a>
+                    <a href="/github" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">Github</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="card">
+        <h1 class="text-4xl font-extrabold text-center mb-6 text-gray-100">AI Image Annotation Tool</h1>
+        <form id="uploadForm" class="space-y-6">
+            <div class="space-y-3">
+                <label class="block text-sm font-medium">Select Images</label>
+                <input type="file" id="images" multiple accept="image/*" class="block w-full text-sm rounded-md shadow-sm">
+            </div>
+
+            <div class="space-y-3">
+                <label class="block text-sm font-medium">Target Object</label>
+                <input type="text" id="targetObject" placeholder="e.g., car, person, dog" class="block w-full text-sm rounded-md shadow-sm">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium">Output Format</label>
+                    <select id="outputFormat" class="block w-full text-sm rounded-md shadow-sm"></select>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium">Visualization Style</label>
+                    <select id="visualizationStyle" class="block w-full text-sm rounded-md shadow-sm"></select>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <label class="block text-sm font-medium">Label(optional)</label>
+                <input type="text" id="user_prompt" placeholder="label name for annotation" class="block w-full text-sm rounded-md shadow-sm">
+            </div>
+
+            <button type="submit" class="w-full button-primary">Process Images</button>
+        </form>
+
+        <div id="progress" class="hidden mt-6">
+            <div class="w-full h-2.5">
+                <div id="progressBar" class="h-2.5" style="width: 0%"></div>
+            </div>
+            <p id="status" class="text-center text-sm text-gray-400 mt-2"></p>
+        </div>
+    </div>
+
+    <script>
+        const baseURL = window.location.origin;
+        const MAX_FILES = 5;
+
+        // Add event listener for file input changes
+        document.getElementById('images').addEventListener('change', (e) => {
+            const fileError = document.getElementById('fileError');
+            if (e.target.files.length > MAX_FILES) {
+                fileError.classList.remove('hidden');
+                e.target.value = ''; // Clear the file input
+            } else {
+                fileError.classList.add('hidden');
+            }
+        });
+
+        async function loadFormats() {
+            try {
+                const response = await fetch(`${baseURL}/formats/`);
+                const data = await response.json();
+                const formatSelect = document.getElementById('outputFormat');
+                const styleSelect = document.getElementById('visualizationStyle');
+
+                data.formats.forEach(format => {
+                    const option = document.createElement('option');
+                    option.value = format.id;
+                    option.textContent = format.name;
+                    formatSelect.appendChild(option);
+                });
+
+                data.visualization_styles.forEach(style => {
+                    const option = document.createElement('option');
+                    option.value = style.id;
+                    option.textContent = style.name;
+                    styleSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading formats:', error);
+            }
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            const files = document.getElementById('images').files;
+            const targetObject = document.getElementById('targetObject').value;
+            const outputFormat = document.getElementById('outputFormat').value;
+            const visualizationStyle = document.getElementById('visualizationStyle').value;
+            const user_prompt = document.getElementById('user_prompt').value;
+
+            if (files.length === 0) {
+                alert('Please select at least one image');
+                return;
+            }
+
+            if (files.length > MAX_FILES) {
+                alert(`Please select a maximum of ${MAX_FILES} images`);
+                return;
+            }
+
+            if (!targetObject) {
+                alert('Please enter a target object');
+                return;
+            }
+
+            document.getElementById('progress').classList.remove('hidden');
+            document.getElementById('status').textContent = 'Uploading images...';
+
+            for (let file of files) {
+                formData.append('files', file);
+            }
+            formData.append('target_object', targetObject);
+            formData.append('output_format', outputFormat);
+            formData.append('visualization_style', visualizationStyle);
+            formData.append('user_prompt', user_prompt);
+
+            try {
+                const response = await fetch(`${baseURL}/upload-images/`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed');
+                }
+
+                const data = await response.json();
+
+                const zipBlob = new Blob(
+                    [new Uint8Array(data.zip_contents.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))],
+                    { type: 'application/zip' }
+                );
+
+                const downloadUrl = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = 'annotations.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+
+                document.getElementById('status').textContent = 'Processing complete!';
+                document.getElementById('progressBar').style.width = '100%';
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('status').textContent = 'Error: ' + error.message;
+            }
+        });
+
+        loadFormats();
+    </script>
+</body>
+</html>
