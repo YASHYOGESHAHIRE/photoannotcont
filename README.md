@@ -14,6 +14,24 @@ Temporary File Management: Automatically cleans up temporary uploads to optimize
 Server Warmth: Background thread pings the health endpoint to prevent cold starts in production.
 Environment Configuration: Uses .env for secure API key management.
 
+Below are some screenshots showcasing the project:
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+  <div>
+    <img src="https://github.com/user-attachments/assets/e8f12dd8-e914-4781-8f83-e0901120592e" alt="Main interface screenshot" width="600" />
+    <p>Main interface of the application.</p>
+  </div>
+  <div>
+    <img src="https://github.com/user-attachments/assets/967dfba3-d114-4a49-b255-b69045d7b077" alt="Feature overview screenshot" width="600" />
+    <p>Feature overview section.</p>
+  </div>
+  <div>
+    <img src="https://github.com/user-attachments/assets/22db180a-8a68-44e9-b000-57eba8027cb0" alt="Detailed view screenshot" width="600" />
+    <p>Detailed view of the application.</p>
+  </div>
+</div>
+
+
 Technologies Used
 
 Backend: FastAPI, Python 3.8+
