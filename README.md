@@ -35,7 +35,7 @@ pip for installing dependencies
 Setup Instructions
 
 Clone the Repository:
-git clone https://github.com/your-username/object-detection-api.git
+git clone (https://github.com/YASHYOGESHAHIRE/photoannotcont)
 cd object-detection-api
 
 
