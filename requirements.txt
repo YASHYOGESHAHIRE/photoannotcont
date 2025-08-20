@@ -7,3 +7,4 @@ google-generativeai
 tqdm
 python-dateutil
 uvicorn
+python-dotenv

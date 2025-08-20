@@ -32,9 +32,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.mount("/static", StaticFiles(directory="static"), name="static")
+from dotenv import load_dotenv
 
-# Initialize Google Gemini
-GOOGLE_API_KEY = "AIzaSyDwyTeQ3mY5WeSy8iF78fVd7qC0nYomPBw"  # Replace with your API key
+# Load environment variables from .env file
+load_dotenv()
+
+# Get API key from environment
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+# Configure Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Create temporary directories
